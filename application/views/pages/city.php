@@ -6,24 +6,20 @@
 				<h1 class="txt-center">
 					If you need a 24 Hour Locksmith in <span class="location-inblock"><?php echo $city_data->name.', '.strtoupper($city_data->state); ?></span> <a href="tel:<?php echo $city_data->phone; ?>" class="phone-inblock">Call <?php echo $city_data->phone; ?></a>
 				</h1>
+				<br/>
+				<h4 class="txt-center">Locksmith Services in <span class="location-inblock"><?php echo $city_data->name.', '.strtoupper($city_data->state); ?></span></h4>
 			</div>
 		</div>
 	</section>
 
     <section class="section-city-wrap">
-
    		<div class="container">
-
     		<div class="row">
-
     			<div class="col-md-8">
 
     				<div class="section-search">
-
 						<div class="searchform-wrap">
-
 							<div class="row">
-								
 								<div class="col-md-10 col-md-offset-1">
 
 									<h2 class="section-label txt-center">Search Locksmith Services</h2>
@@ -35,7 +31,6 @@
 							</div>
 
 					    </div>
-					    
 					</div>
 
 					<div class="city-promo-wrap">

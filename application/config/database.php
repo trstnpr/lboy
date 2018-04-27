@@ -81,9 +81,9 @@ $db['default'] = array(
 	'password' => '',
 	'database' => 'lockboy',
 
-	// 'username' => '',
-	// 'password' => '',
-	// 'database' => '',
+	// 'username' => 'boylocks_user',
+	// 'password' => 'b]0TM-_)e6c{',
+	// 'database' => 'boylocks_main',
 
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

@@ -13,89 +13,61 @@
 	</section>
 
     <section class="section-zip-wrap">
-
    		<div class="container">
-
     		<div class="row">
-
     			<div class="col-md-8">
 
-    				<div class="section-search data-img" data-bg="<?php echo base_url('build/images/geoblue.jpg'); ?>">
-
+    				<div class="section-search">
 						<div class="searchform-wrap">
-
 							<div class="row">
-								
 								<div class="col-md-10 col-md-offset-1">
-
 									<h2 class="section-label txt-center">Search Locksmith Services</h2>
-									
 									<?php include('parts/form-search.php'); ?>
-
 								</div>
-
 							</div>
-
 					    </div>
-					    
 					</div>
 
 					<div class="zip-promo-wrap">
-			    		<div class="row">
-			    			
-			    			<div class="col-md-10 col-md-offset-1">
-			    				
-			    				<div class="promo-item data-img" data-bg="<?php echo base_url('build/images/random/8.jpg'); ?>">
-			    					<div class="overlay">
-			    						
-			    						<h3>If you're seeking Reliable Locksmith Companies in <span class="location-inblock"><?php echo ucwords($location); ?></span></h3>
-										<h2><a href="tel:<?php echo $city_data->phone; ?>" class="phone-inblock">Call <?php echo $city_data->phone; ?></a></h2>
-
-			    					</div>
-			    				</div>
-
-			    			</div>
-
-			    		</div>
+	    				<div class="promo-item">
+	    					<div class="overlay">
+	    						<h3>If you're seeking Reliable Locksmith Companies in <span class="location-inblock"><?php echo ucwords($location); ?></span></h3>
+								<h2><a href="tel:<?php echo $city_data->phone; ?>" class="phone-inblock">Call <?php echo $city_data->phone; ?></a></h2>
+	    					</div>
+	    				</div>
 		    		</div>
 
     				<div class="section-content">
 
 			 			<div class="service-item-wrap">
 
-			    			<?php
-
+			    		<?php
 		    				if($res_count != 0) {
-		    					$business = $yp['data']->searchResult->searchListings->searchListing;
-
+		    					$business = $api;
 		    					foreach($business as $biz) {
-
-		    						$address1 = ($biz->street != NULL AND $biz->city != NULL) ? $biz->street.', '.$biz->city : 'No Information Given' ;
-		    						$address2 = ($biz->city != NULL AND $biz->zip != NULL AND $biz->state != NULL) ? $biz->city.' '.sprintf('%05u', $biz->zip).', '.$biz->state : 'No Information Given' ;
+		    						$address1 = (isset($biz['location']['address'])) ? $biz['location']['address'] : NULL;
+		    						$address2 = $biz['location']['city'].' '.$biz['location']['zipcode'].', '.$biz['location']['state'];
+		    						$category = join(', ', $biz['categories']);
+		    						$thumb = (!empty($biz['photos']['primary'])) ? $biz['photos']['primary'] : base_url('build/images/biz-placeholder.png');
 
 		    			?>
-			    			<div class="biz-item data-img" data-bg="<?php echo base_url('build/images/geowhite.jpg'); ?>">
+			    			<div class="biz-item">
 
 			    				<div class="row">
-			    					<div class="col-md-8">
-
-						    			<h3 class="biz-title"><?php echo $biz->businessName; ?> <small class="txt-inblock">Locksmith Service</small></h3>
-
+			    					<div class="col-md-3">
+										<div class="biz-img">
+					    					<img src="<?php echo $thumb; ?>" class="img-responsive" alt="<?php echo $biz['name']; ?>" title="<?php echo $biz['name']; ?>" />
+					    				</div>
+									</div>
+			    					<div class="col-md-9">
+						    			<h3 class="biz-title"><?php echo $biz['name']; ?></h3>
 						    			<div class="biz-info">
 											<ul class="list-info fa-ul">
 												<li><i class="fa fa-map-marker fa-li"></i> <?php echo $address1; ?></li>
 												<li><i class="fa fa-location-arrow fa-li"></i> <?php echo $address2; ?></li>
-												<li><i class="fa fa-li fa-phone"></i> <?php echo $biz->phone; ?></li>
+												<li><i class="fa fa-li fa-puzzle-piece"></i> <?php echo $category; ?></li>
 											</ul>
 										</div>
-
-									</div>
-									<div class="col-md-4">
-										<div class="biz-img">
-					    					<?php if($biz->adImage != NULL) { ?>
-					    					<img src="<?php echo $biz->adImage; ?>" class="img-responsive" ?>
-					    					<?php } ?>
-					    				</div>
 									</div>
 						    	</div>
 

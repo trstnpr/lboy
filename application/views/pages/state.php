@@ -1,7 +1,3 @@
-<?php
-	$state = $state_arr[0];
-?>
-
 <div class="state-content">
 
 	<section class="section-header data-img" data-bg="<?php echo base_url('build/images/banner-bg-4.jpeg'); ?>">
@@ -20,7 +16,7 @@
 
     			<div class="col-md-8">
 
-    				<div class="section-search data-img" data-bg="<?php echo base_url('build/images/geoblue.jpg'); ?>">
+    				<div class="section-search">
 
 						<div class="searchform-wrap">
 

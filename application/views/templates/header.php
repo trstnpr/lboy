@@ -62,7 +62,7 @@
 				<div class="container">
 
 					<a href="<?php echo base_url(); ?>" class="mobile-brand">
-						BRAND
+						<img src="<?php echo base_url('build/images/logo.png'); ?>" class="img-responsive" alt="<?php echo the_config('site_name'); ?>" />
 					</a>
 
 					<p>Get your business here!</p>
@@ -80,6 +80,9 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
+						<a class="navbar-brand hidden-sm hidden-xs" href="<?php echo base_url(); ?>">
+							<img src="<?php echo base_url('build/images/logo-2.png'); ?>" alt="<?php echo the_config('site_name'); ?>" />
+						</a>
 					</div>
 
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

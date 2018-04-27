@@ -6,7 +6,7 @@
 <div class="widget-recent-blog">
 
 	<div class="widget-header">
-		<h3>Recent Posts</h3>
+		<h3><i class="fa fa-thumb-tack hidden-xs"></i> Recent Posts</h3>
 	</div>
 
 	<div class="widget-body">

@@ -30,6 +30,9 @@
 								</div>
 								<br/>
 							<?php } ?>
+
+							<h4 class="post-title"><?php echo $page->title; ?></h4>
+							<p class="post-meta">Posted on <?php echo date_proper($page->created_at).' by '.$page->author; ?></p>
 		    				
 							<?php echo $page->content; ?>
 

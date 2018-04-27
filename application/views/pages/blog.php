@@ -1,4 +1,4 @@
-<div class="blog-content">
+<div class="blogs-content">
 
 	<section class="section-header data-img" data-bg="<?php echo base_url('build/images/random/5.jpg'); ?>">
 		<div class="overlay">
@@ -37,7 +37,7 @@
 
 								<div class="blog-body">
 
-									<span class="blog-meta">Posted on <?php echo date_proper($blog->created_at); ?></span>
+									<span class="blog-meta">Posted on <?php echo date_proper($blog->created_at).' by '.$blog->author; ?></span>
 
 									<h2 class="blog-title"><?php echo $blog->title; ?></h2>
 

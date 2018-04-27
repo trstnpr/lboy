@@ -53,12 +53,10 @@
 					    			<div class="result-details">
 										<h3 clas="result-title">
 											<a href="<?php echo base_url('city/'.$result->slug); ?>">
-												<i class="fa fa-unlock-alt hidden-xs"></i> Locksmith Services in <strong class="txt-inblock"><?php echo $result->name.', '.strtoupper($result->state); ?></strong>
+												Locksmith Boy Services in <strong class="txt-inblock"><?php echo $result->name.', '.strtoupper($result->state); ?></strong>
 											</a>
 										</h3>
-										
-										<hr/>
-
+										<a class="permalink" href="<?php echo base_url('city/'.$result->slug); ?>"><?php echo base_url('city/'.$result->slug); ?></a>
 										<ul class="fa-ul">
 											<li><i class="fa fa-location-arrow fa-li"></i> <?php echo $result->name.', '.strtoupper($result->state); ?></li>
 											<li><i class="fa fa-phone fa-li"></i> <?php echo $result->phone; ?></li>
@@ -99,6 +97,8 @@
 		    				<?php } ?>
 		    				</div>
 		    			</div>
+
+		    			<?php include('parts/widget-aside-recent-blog.php'); ?>
 
 	    			</div>
 

@@ -86,6 +86,7 @@
 					$data['city_count'] = count($this->City_model->get_city_from_state(strtolower($data['abbrev'])));
 					$data['cities'] = $this->City_model->get_city_from_state(strtolower($data['abbrev']));
 					$data_state = $data['state_arr'][0];
+					$data['state'] = $data_state;
 
 					$rand_int = array_rand(range(1,12), 1);
 					$data['banner_img'] = 'build/images/random/'.$rand_int.'.jpg';
@@ -100,6 +101,7 @@
 					$this->load->view('templates/header', $data);
 					$this->load->view('pages/'.$page, $data);
 					$this->load->view('templates/footer');
+
 				} else {
 
 					header('Location: '.base_url('states'));
@@ -128,38 +130,42 @@
 					$api_data = $api['items'];
 					$data['res_count'] = $api['results'];
 					$data['api'] = $api_data;
-
 					if($api) {
 						if($data['res_count'] > 0) {
 							$map_data = array();
 							$hit = array();
+							$apibiz = array();
 							foreach($api_data as $api_place) {
 								$map_data[] = '["'.addslashes($api_place['name']).'", '.$api_place['location']['coordinates']['latitude'].', '.$api_place['location']['coordinates']['longitude'].']';
-
 								if($api_place['location']['city'] == $city) {
 									$hit[] = 1;
 								}
+								$apibiz[] = $api_place['name'];
 							}
 							$data['map_data'] = $map_data;
-							
+							$business = join(', ', $apibiz);
+
 							$exact = array_sum($hit).' Exact Results';
+							$api_count = ($exact != 0) ? $exact : count($data['res_count']).' Suggestions';
+							$m_desc = "Top Locksmith Boys in ".$city.", ".$state_abbrev." - ".$business;
+						} else {
+							$api_count = '0 Results';
+							$m_desc = "Top Locksmith Boys in ".$city.", ".$state_abbrev;
 						}
 					}
 
-					$data['title'] = "Find 24 Hour Emergency Locksmiths in ".$city.", ".$state_abbrev." - ".the_config('site_name');
 					// META
+					$data['title'] = "Look for 24/7 Locksmith Boys ".$city.", ".$state_abbrev." | ".$api_count." | As of ".recent_my()." - ".the_config('site_name');
 					$data['meta_title'] = $data['title'];
-					$data['meta_keyword'] = "";
-					$data['meta_description'] = "LocksmithFindr helps you find 24 hour emergency locksmiths in ".$city.", ".$state_abbrev;
+					$data['meta_keyword'] = "24/7 Locksmith services in ".$city.", ".$state_abbrev.", residential locksmith service in ".$city.", ".$state_abbrev.", commercial locksmith service in ".$city.", ".$state_abbrev.", automotive locksmith service in ".$city.", ".$state_abbrev.", emergency locksmith service in ".$city.", ".$state_abbrev.", industrial locksmith service in ".$city.", ".$state_abbrev;
+					$data['meta_description'] = $m_desc;
 					
 					$this->load->view('templates/header', $data);
 					$this->load->view('pages/'.$page, $data);
 					$this->load->view('templates/footer');
 
 				} else {
-
 					show_404();
-
 				}
 			}			
 
@@ -169,44 +175,50 @@
 			if(!file_exists(APPPATH.'views/pages/'.$page.'.php')) {
 				show_404();
 			} else {
-
-
 				$data['zip'] = $this->uri->segment(2, 0);
-
 				if(is_numeric($data['zip']) AND strlen($data['zip']) == 5) {
 
 					$city_data = $this->City_model->get_city_from_zip($data['zip']);
-
 					$data['city_data'] = $city_data[0];
-
 					$data['state'] = $this->State_model->get_state_from_abbrev($data['city_data']->state)[0];
-
 					$data['term'] = 'locksmith';
 					$data['location'] = $data['city_data']->name.', '.strtoupper($data['city_data']->state).' '.$data['zip'];
-
 					$location = 'location='.$data['city_data']->lat.','.$data['city_data']->lng;
 					$keyword = preg_replace('/\s+/', '+', $data['location']);
 
-					$data['yp'] = search($keyword);
-					$ypdata = $data['yp'];
-					$data['res_count'] = $ypdata['data']->searchResult->metaProperties->listingCount;
-
-					if ($ypdata['result'] == 'success') {
-						if($data['res_count'] != 0) {
-							$results = $ypdata['data']->searchResult->searchListings->searchListing;
+					$api = getDataApi($keyword);
+					$api_data = $api['items'];
+					$data['res_count'] = $api['results'];
+					$data['api'] = $api_data;
+					if($api) {
+						if($data['res_count'] > 0) {
 							$map_data = array();
-							foreach($results as $yplace) {
-								$map_data[] = '["'.addslashes($yplace->businessName).'", '.$yplace->latitude.', '.$yplace->longitude.']';
+							$hit = array();
+							$apibiz = array();
+							foreach($api_data as $api_place) {
+								$map_data[] = '["'.addslashes($api_place['name']).'", '.$api_place['location']['coordinates']['latitude'].', '.$api_place['location']['coordinates']['longitude'].']';
+								if($api_place['location']['city'] == $data['city_data']->name) {
+									$hit[] = 1;
+								}
+								$apibiz[] = $api_place['name'];
 							}
 							$data['map_data'] = $map_data;
+							$business = join(', ', $apibiz);
+
+							$exact = array_sum($hit).' Exact Results';
+							$api_count = ($exact != 0) ? $exact : count($data['res_count']).' Suggestions';
+							$m_desc = "Featured Locksmith Boys in ".$data['zip'].", ".strtoupper($data['city_data']->state)." - ".$business;
+						} else {
+							$api_count = '0 Results';
+							$m_desc = "Featured Locksmith Boys in ".$data['zip'].", ".strtoupper($data['city_data']->state);
 						}
 					}
 
-					$data['title'] = "Find Reliable Locksmiths in ".$data['zip'].", ".strtoupper($data['city_data']->state)." - ".the_config('site_name');
 					// META
+					$data['title'] = "Notable 24/7 Locksmith Boys ".$data['zip'].", ".strtoupper($data['city_data']->state)." | ".$api_count." | As of ".recent_my()." - ".the_config('site_name');
 					$data['meta_title'] = $data['title'];
-					$data['meta_keyword'] = "";
-					$data['meta_description'] = "LocksmithFindr helps you find competent locksmith experts in ".$data['zip'].", ".strtoupper($data['city_data']->state);
+					$data['meta_keyword'] = "24/7 Locksmith services in ".$data['zip'].", ".strtoupper($data['city_data']->state).", residential locksmith service in ".$data['zip'].", ".strtoupper($data['city_data']->state).", commercial locksmith service in ".$data['zip'].", ".strtoupper($data['city_data']->state).", automotive locksmith service in ".$data['zip'].", ".strtoupper($data['city_data']->state).", emergency locksmith service in ".$data['zip'].", ".strtoupper($data['city_data']->state).", industrial locksmith service in ".$data['zip'].", ".strtoupper($data['city_data']->state);
+					$data['meta_description'] = $m_desc;
 					
 					$this->load->view('templates/header', $data);
 					$this->load->view('pages/'.$page, $data);
@@ -223,8 +235,8 @@
 
 			$mdata = $this->input->post();
 
-			$site_key = '6LcEcC4UAAAAAHMgDPR6k_58FCJteieQEtH101z3';
-			$secret_key = '6LcEcC4UAAAAAHsoYXsx_zizGkR0jYMb53M-BEJ3';
+			$site_key = the_config('gr_site_key');
+			$secret_key = the_config('gr_secret_key');
 			$site_verify = 'https://www.google.com/recaptcha/api/siteverify?secret='.$secret_key.'&response='.$mdata['g-recaptcha-response'].'&remoteip='.$_SERVER['REMOTE_ADDR'];
 			$response = file_get_contents($site_verify);
 			$g_response = json_decode($response);

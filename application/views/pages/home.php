@@ -8,7 +8,7 @@
 
 	    		<div class="tagline-wrap">
 	    		
-		    		<h1>Welcome to LockBuoy!</h1>
+		    		<h1>Welcome to <?php echo the_config('site_name'); ?>!</h1>
 
 		    		<h2><?php echo the_config('tag_line'); ?></h2>
 

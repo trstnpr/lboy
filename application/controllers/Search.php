@@ -4,12 +4,13 @@
 
 		public function __construct()
         {
-                parent::__construct();
-                
-                $this->load->helper('general');
-				$this->load->model('State_model');
-				$this->load->model('City_model');
-				$this->load->model('Configuration_model');
+            parent::__construct();
+            
+            $this->load->helper('general');
+			$this->load->model('State_model');
+			$this->load->model('City_model');
+			$this->load->model('Configuration_model');
+			$this->load->model('Page_model');
         }
 
 		public function index($page = 'search') {
