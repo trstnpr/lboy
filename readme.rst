@@ -1,4 +1,4 @@
-# Semantic Starter Kit
+# Semantic Starter Kit #
 Simple web starter template built to automate and enhance your workflow by [trstn](https://www.linkedin.com/in/tristan-pare-017181118/).
 
 
